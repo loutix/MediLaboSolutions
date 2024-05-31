@@ -16,6 +16,9 @@
     <properties>
         <java.version>21</java.version>
         <spring-cloud.version>2023.0.1</spring-cloud.version>
+        <spring-cloud-eureka>4.1.0</spring-cloud-eureka>
+        <thymeleaf-layout-dialect>3.0.0</thymeleaf-layout-dialect>
+        <feign>4.1.1</feign>
     </properties>
     <dependencies>
 
@@ -54,26 +57,22 @@
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>3.3.0</version>
+            <version>${thymeleaf-layout-dialect}</version>
         </dependency>
 
         <!-- EUREKA -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>${spring-cloud-eureka}</version>
         </dependency>
 
         <!-- FEIGN -->
-
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>4.1.1</version>
+            <version>${feign}</version>
         </dependency>
-
-
-
 
     </dependencies>
     <dependencyManagement>
