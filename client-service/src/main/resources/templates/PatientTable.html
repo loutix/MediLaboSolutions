@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+        lang="en"
+        layout:decorate="layout/main">
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row my-4">
+        <h4>La liste des patients</h4>
+
+        <h1>Patients List</h1>
+        <ul>
+            <li th:each="patient : ${patientList}">
+                <span th:text="${patient.first_name} + ' ' + ${patient.last_name}"></span>
+            </li>
+        </ul>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

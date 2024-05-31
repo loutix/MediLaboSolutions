@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequestMapping(path = "patients")
+@RequestMapping("/patient-service")
 public class PatientController {
 
     private final PatientServiceImpl patientService;
@@ -23,20 +23,20 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping
-    public Set<Patient> index() {
-        log.info("GET:  /");
-        return patientService.index();
+    @GetMapping(path = "/patients")
+    public ResponseEntity<Set<Patient>> index() {
+        log.info("GET: /");
+        return ResponseEntity.ok(patientService.index());
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/patient/update/{id}")
     public ResponseEntity<Patient> show(@PathVariable("id") Integer id) {
         log.info("GET:  /update/{}", id);
         Optional<Patient> patient = patientService.findPatient(id);
         return ResponseEntity.of(patient);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/patient/update/{id}")
     public ResponseEntity<Patient> update(@PathVariable("id") Integer id, @Valid @RequestBody PatientDto patientDto) {
         log.info("PUT:  /update/{}", id);
         Patient patient = patientService.update(id, patientDto);
