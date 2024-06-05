@@ -7,7 +7,10 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface PatientService {
-     Set<Patient> index();
-     Optional<Patient> findPatient(Integer id);
-     Patient update(Integer id, PatientDto patientDto);
+    Set<Patient> index();
+
+    Optional<Patient> findPatient(Integer id);
+
+    Patient update(Integer id, PatientDto patientDto);
+
 }

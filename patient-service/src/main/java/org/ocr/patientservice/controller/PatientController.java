@@ -29,9 +29,10 @@ public class PatientController {
         return ResponseEntity.ok(patientService.index());
     }
 
-    @GetMapping("/patient/update/{id}")
+
+    @GetMapping("/show/{id}")
     public ResponseEntity<Patient> show(@PathVariable("id") Integer id) {
-        log.info("GET:  /update/{}", id);
+        log.info("GET:  /show/{}", id);
         Optional<Patient> patient = patientService.findPatient(id);
         return ResponseEntity.of(patient);
     }

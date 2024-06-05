@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+        lang="en"
+        layout:decorate="layout/main">
+<body>
+
+<div layout:fragment="content">
+
+
+    <main class="container my-2 d-flex justify-content-center">
+
+        <div class="card" style="width: 30rem;">
+            <div class="card-header text-center fw-bold ">
+                Patient Details
+            </div>
+            <ul class="list-group list-group-flush">
+                <li th:text="'First name : ' + ${patient.first_name}" class="list-group-item"></li>
+                <li th:text="'Last name : ' + ${patient.last_name}" class="list-group-item"></li>
+                <li th:text="'Birth date : ' + ${patient.birth_date}" class="list-group-item"></li>
+                <li th:text="'Gender : ' + ${patient.gender}" class="list-group-item"></li>
+                <li th:text="'Address : ' + ${patient.address}" class="list-group-item"></li>
+                <li th:text="'Phone : ' + ${patient.phone}" class="list-group-item"></li>
+
+            </ul>
+            <div class="card-footer">
+                Patient I D: #<span th:text="${patient.id}"></span>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+
+</body>
+</html>

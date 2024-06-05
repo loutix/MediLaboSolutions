@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Data
 public class Patient {
 
+    private Integer id;
+
     private String first_name;
 
     private String last_name;

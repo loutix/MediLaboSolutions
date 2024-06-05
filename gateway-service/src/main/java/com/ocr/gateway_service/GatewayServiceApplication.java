@@ -16,14 +16,6 @@ public class GatewayServiceApplication {
         SpringApplication.run(GatewayServiceApplication.class, args);
     }
 
-    @Bean
-    public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-        return builder.routes()
-                .route("patient-service", r -> r.path("/patient-service/**")
-                        .uri("lb://patient-service"))
-                .route("client-service", r -> r.path("/client-service/**")
-                        .uri("lb://client-service"))
-                .build();
-    }
+
 
 }

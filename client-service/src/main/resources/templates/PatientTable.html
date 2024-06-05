@@ -10,14 +10,50 @@
     <div class="row my-4">
         <h4>La liste des patients</h4>
 
-        <h1>Patients List</h1>
-        <ul>
-            <li th:each="patient : ${patientList}">
-                <span th:text="${patient.first_name} + ' ' + ${patient.last_name}"></span>
-            </li>
-        </ul>
 
+        <table class="table table-hover text-center">
+            <thead>
+            <tr class="table-success">
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Birth date</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
 
+            <tr th:if="${ patientList == null }">
+                <td colspan="5">
+                    <div class="text-center my-3">No patient at the moment...</div>
+                </td>
+            </tr>
+
+            <tr th:each="patient,  iStat: ${patientList}">
+                <td><span th:text="${iStat.index+1}"></span></td>
+                <td><span th:text="${patient.first_name}"></span></td>
+                <td><span th:text="${patient.last_name}"></span></td>
+                <td><span th:text="${patient.birth_date}"></span></td>
+                <td><span th:text="${patient.gender}"></span></td>
+                <td><span th:text="${patient.address}"></span></td>
+                <td><span th:text="${patient.phone}"></span></td>
+                <td>
+
+                    <a th:href="@{'patient/'+ ${patient.id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="green"
+                             class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                        </svg>
+                    </a>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
