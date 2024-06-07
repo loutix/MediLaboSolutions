@@ -9,8 +9,8 @@ import org.ocr.patientservice.service.PatientServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @RestController
@@ -24,7 +24,7 @@ public class PatientController {
     }
 
     @GetMapping(path = "/patients")
-    public ResponseEntity<Set<Patient>> index() {
+    public ResponseEntity<List<Patient>> index() {
         log.info("GET: /");
         return ResponseEntity.ok(patientService.index());
     }

@@ -21,7 +21,7 @@ public class PatientDto {
     @NotBlank(message = "First name is mandatory")
     private String first_name;
 
-    @NotBlank(message = "First name is mandatory")
+    @NotBlank(message = "Last name is mandatory")
     private String last_name;
 
     @NotNull(message = "Birth date is mandatory")

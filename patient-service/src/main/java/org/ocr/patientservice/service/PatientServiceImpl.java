@@ -8,9 +8,9 @@ import org.ocr.patientservice.interfaces.PatientService;
 import org.ocr.patientservice.model.Patient;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -28,8 +28,10 @@ public class PatientServiceImpl implements PatientService {
      * @return Set<Patient>
      */
     @Override
-    public Set<Patient> index() {
-        return new HashSet<>(patientRepository.findAll());
+    public List<Patient> index() {
+        List<Patient> patientList = patientRepository.findAll();
+        patientList.sort(Comparator.comparingInt(Patient::getId));
+        return patientList;
     }
 
 

@@ -1,6 +1,8 @@
 package com.ocr.client_service.controller;
 
-import com.ocr.client_service.beans.Patient;
+import com.ocr.client_service.dto.Note;
+import com.ocr.client_service.dto.Patient;
+import com.ocr.client_service.proxies.NoteProxy;
 import com.ocr.client_service.proxies.PatientProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,8 +20,11 @@ public class clientController {
 
     private final PatientProxy patientProxy;
 
-    public clientController(PatientProxy patientProxy) {
+    private final NoteProxy noteProxy;
+
+    public clientController(PatientProxy patientProxy, NoteProxy noteProxy) {
         this.patientProxy = patientProxy;
+        this.noteProxy = noteProxy;
     }
 
     @GetMapping("/home")
@@ -35,12 +40,19 @@ public class clientController {
     }
 
     @GetMapping("/patient/{id}")
-    public String showPatient(@PathVariable(value = "id") Integer id , Model model) {
+    public String showPatient(@PathVariable(value = "id") Integer id, Model model) {
+
+
         Patient patient = patientProxy.getPatient(id);
         model.addAttribute("patient", patient);
-        return "ShowPatient";
-    }
 
+        List<Note> noteList = noteProxy.getNoteByPatientId(id);
+        model.addAttribute("noteList", noteList);
+
+        return "ShowPatient";
+
+
+    }
 
 
 }

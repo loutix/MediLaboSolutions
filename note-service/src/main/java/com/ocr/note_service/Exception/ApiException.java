@@ -1,4 +1,4 @@
-package org.ocr.patientservice.Exception;
+package com.ocr.note_service.Exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

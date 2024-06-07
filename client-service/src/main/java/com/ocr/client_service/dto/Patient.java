@@ -1,4 +1,4 @@
-package com.ocr.client_service.beans;
+package com.ocr.client_service.dto;
 
 import com.ocr.client_service.constants.Gender;
 import lombok.AllArgsConstructor;
