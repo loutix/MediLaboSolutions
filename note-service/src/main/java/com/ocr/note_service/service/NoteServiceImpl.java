@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class NoteServiceImpl {
 
-    private NoteRepository noteRepository;
+    private final NoteRepository noteRepository;
 
     public NoteServiceImpl(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
@@ -26,7 +26,7 @@ public class NoteServiceImpl {
         if (!noteRepository.existsByPatId(id)) {
             throw new PatientNotFoundException(id);
         } else {
-            return noteRepository.findByPatId(id);
+            return noteRepository.findByPatId(id).reversed();
         }
     }
 

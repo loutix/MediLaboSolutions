@@ -9,6 +9,7 @@
 
 
     <section class="container my-2 d-flex justify-content-center notes-section">
+
         <div class="card" style="width: 30rem;">
             <div class="card-header text-center fw-bold ">
                 Patient Details
@@ -20,7 +21,6 @@
                 <li th:text="'Gender : ' + ${patient.gender}" class="list-group-item"></li>
                 <li th:text="'Address : ' + ${patient.address}" class="list-group-item"></li>
                 <li th:text="'Phone : ' + ${patient.phone}" class="list-group-item"></li>
-
             </ul>
             <div class="card-footer text-center">
                 Patient I D: #<span th:text="${patient.id}"></span>
@@ -29,21 +29,33 @@
     </section>
 
     <div class="text-center mt-3">
-        <h2>NOTES</h2>
-    </div>
+        <a th:href="@{ /client-service/patients }" class="btn btn-secondary my-4 mx-3">Return patients list</a>
+        <a th:href="@{ ${patient.id} + '/note'}" class="btn btn-success my-4 mx-3">Add New Note</a>
 
-    <section class="container my-2 d-flex justify-content-center notes-section">
-        <div class="card" style="width: 30rem;">
-            <div class="card-body">
-                <ol>
-                    <li th:each="note, iStat : ${noteList}" class="mb-3">
-                        <h5 class="card-title" th:text="${note.id}"></h5>
-                        <p class="card-text" th:text="${note.note}"></p>
-                    </li>
-                </ol>
+        <!--success message-->
+
+        <div class="container" th:if="${param.success}">
+            <div class="alert alert-info mx-auto d-block">
+                New note have been successfully registered!
             </div>
         </div>
-    </section>
+
+        <section class="container d-flex justify-content-center">
+
+            <div class="card" style="width: 100rem;">
+                <div class="card-body">
+
+
+                    <div th:each="note, iStat : ${noteList}" class="mb-3">
+                        <h6 class="card-title" th:text=" 'Note n° ' + ${noteList.size()-iStat.index}"></h6>
+                        <pre class="card-text" th:text="${note.note}"></pre>
+                        <hr>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 </body>
 </html>

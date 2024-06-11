@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+        lang="en"
+        layout:decorate="layout/main">
+<body>
+
+<div layout:fragment="content">
+
+    <div class="container mt-4 col-8">
+        <h4 class="text-center">Add Note</h4>
+        <form method="post"
+              role="form"
+              th:action="@{/client-service/patient/note}"
+              th:object="${noteRequestDto}"
+        >
+            <div class="form-group mb-3">
+                <label for="patId">Patient ID</label>
+                <input type="text" class="form-control bg-light" id="patId" th:field="*{patId}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="first_name">Fist Name</label>
+                <input type="text" class="form-control bg-light" id="first_name" th:field="*{first_name}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="last_name">last Name</label>
+                <input type="text" class="form-control bg-light" id="last_name" th:field="*{last_name}" readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="note">Note</label>
+                <textarea class="form-control" id="note" th:field="*{note}" rows="4"></textarea>
+                <div th:if="${#fields.hasErrors('note')}" class="text-danger">
+                    <p th:errors="*{note}"></p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success text-center">Save note</button>
+            </div>
+
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

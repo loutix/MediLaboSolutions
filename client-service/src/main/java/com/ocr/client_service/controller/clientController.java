@@ -1,15 +1,16 @@
 package com.ocr.client_service.controller;
 
 import com.ocr.client_service.dto.Note;
+import com.ocr.client_service.dto.NoteRequestDto;
 import com.ocr.client_service.dto.Patient;
 import com.ocr.client_service.proxies.NoteProxy;
 import com.ocr.client_service.proxies.PatientProxy;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class clientController {
     @GetMapping("/patient/{id}")
     public String showPatient(@PathVariable(value = "id") Integer id, Model model) {
 
-
         Patient patient = patientProxy.getPatient(id);
         model.addAttribute("patient", patient);
 
@@ -50,7 +50,39 @@ public class clientController {
         model.addAttribute("noteList", noteList);
 
         return "ShowPatient";
+    }
 
+    @GetMapping("/patient/{id}/note")
+    public String formNote(@PathVariable(value = "id") Integer id, Model model) {
+
+        Patient patient = patientProxy.getPatient(id);
+
+        NoteRequestDto noteRequestDto = new NoteRequestDto();
+        noteRequestDto.setPatId(patient.getId());
+        noteRequestDto.setFirst_name(patient.getFirst_name());
+        noteRequestDto.setLast_name(patient.getLast_name());
+
+
+        model.addAttribute("noteRequestDto", noteRequestDto);
+
+        return "AddNote";
+    }
+
+    @PostMapping("patient/note")
+    public String formNote(@Valid @ModelAttribute("noteRequestDto") NoteRequestDto noteRequestDto, BindingResult result) {
+        if (result.hasErrors()) {
+            return "AddNote";
+        }
+
+        Note noteAdded = new Note();
+        noteAdded.setPatId(noteRequestDto.getPatId());
+        noteAdded.setNote(noteRequestDto.getNote());
+
+        Integer id = noteAdded.getPatId();
+
+        noteProxy.addNewNote(id,noteAdded);
+
+        return "redirect:/client-service/patient/"+ id +"?success";
 
     }
 
