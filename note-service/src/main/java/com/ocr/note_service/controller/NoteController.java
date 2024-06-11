@@ -29,7 +29,7 @@ public class NoteController {
     }
 
     @GetMapping("/patient/{id}")
-    public ResponseEntity<List<Note>> showPatient(@PathVariable("id") Integer id) {
+    public ResponseEntity<List<Note>> showPatientNote(@PathVariable("id") Integer id) {
         log.info("GET: /patient/{}", id);
         return ResponseEntity.ok(noteServiceImpl.getNotesByPatientId(id));
     }

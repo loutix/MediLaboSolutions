@@ -1,6 +1,6 @@
 package com.ocr.client_service.proxies;
 
-import com.ocr.client_service.dto.Patient;
+import com.ocr.client_service.bean.Patient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

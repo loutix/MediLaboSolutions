@@ -11,7 +11,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handleException(Model model, Exception exception){
         model.addAttribute("errorMsg", exception.getMessage());
-        log.info("*** ERROR ***");
+        log.info("*** ERROR  CACHED***");
         log.error(exception.getMessage(), exception);
         log.info("*** ERROR ***");
         return  "error";

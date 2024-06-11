@@ -1,8 +1,8 @@
 package com.ocr.client_service.controller;
 
-import com.ocr.client_service.dto.Note;
+import com.ocr.client_service.bean.Note;
 import com.ocr.client_service.dto.NoteRequestDto;
-import com.ocr.client_service.dto.Patient;
+import com.ocr.client_service.bean.Patient;
 import com.ocr.client_service.proxies.NoteProxy;
 import com.ocr.client_service.proxies.PatientProxy;
 import jakarta.validation.Valid;
