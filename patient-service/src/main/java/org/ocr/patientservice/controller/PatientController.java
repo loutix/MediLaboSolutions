@@ -30,7 +30,7 @@ public class PatientController {
     }
 
 
-    @GetMapping("/show/{id}")
+    @GetMapping("/patient/{id}")
     public ResponseEntity<Patient> show(@PathVariable("id") Integer id) {
         log.info("GET:  /show/{}", id);
         Optional<Patient> patient = patientService.findPatient(id);

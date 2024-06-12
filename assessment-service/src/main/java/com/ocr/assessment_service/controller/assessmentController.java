@@ -1,8 +1,10 @@
 package com.ocr.assessment_service.controller;
 
 
-import com.ocr.assessment_service.assessmentService.AssessmentService;
+import com.ocr.assessment_service.Service.AssessmentService;
 import com.ocr.assessment_service.bean.Note;
+import com.ocr.assessment_service.bean.Patient;
+import com.ocr.assessment_service.dto.RiskDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,17 +25,23 @@ public class assessmentController {
         this.assessmentService = assessmentService;
     }
 
-    @GetMapping("/index")
-    public ResponseEntity<String> hello() {
-        log.info("GET: /hello");
-        return ResponseEntity.ok("hello");
 
+    @GetMapping("/analysis/{id}")
+    public ResponseEntity<RiskDto> PatientAnalysisRisk(@PathVariable("id") Integer id) {
+        log.info("GET: analysis/{}", id);
+        return ResponseEntity.ok(assessmentService.getPatientRisk(id));
     }
 
-    @GetMapping("/patient/{id}")
+    @GetMapping("note/patient/{id}")
     public ResponseEntity<List<Note>> showPatientNote(@PathVariable("id") Integer id) {
-        log.info("GET: /patient/{}", id);
+        log.info("GET: note/patient/{}", id);
         return ResponseEntity.ok(assessmentService.showPatientNote(id));
+    }
+
+    @GetMapping("patient/{id}")
+    public ResponseEntity<Patient> showPatient(@PathVariable("id") Integer id) {
+        log.info("GET: patient/{}", id);
+        return ResponseEntity.ok(assessmentService.showPatient(id));
     }
 
 }
