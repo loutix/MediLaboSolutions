@@ -1,6 +1,6 @@
 package com.ocr.client_service.bean;
 
-import com.ocr.client_service.constants.Gender;
+import com.ocr.client_service.constants.GenderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class Patient {
 
     private LocalDate birth_date;
 
-    private Gender gender;
+    private GenderEnum gender;
 
     private String address;
 

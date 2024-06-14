@@ -15,47 +15,53 @@
                 Patient Details
             </div>
             <ul class="list-group list-group-flush">
-                <li th:text="'First name : ' + ${patient.first_name}" class="list-group-item"></li>
-                <li th:text="'Last name : ' + ${patient.last_name}" class="list-group-item"></li>
-                <li th:text="'Birth date : ' + ${patient.birth_date}" class="list-group-item"></li>
-                <li th:text="'Gender : ' + ${patient.gender}" class="list-group-item"></li>
-                <li th:text="'Address : ' + ${patient.address}" class="list-group-item"></li>
-                <li th:text="'Phone : ' + ${patient.phone}" class="list-group-item"></li>
+                <li th:text="'Patient ID : ' + ${showPatientDto.id}" class="list-group-item"></li>
+                <li th:text="'First name : ' + ${showPatientDto.first_name}" class="list-group-item"></li>
+                <li th:text="'Last name : ' + ${showPatientDto.last_name}" class="list-group-item"></li>
+                <li th:text="'Birth date : ' + ${showPatientDto.birth_date}" class="list-group-item"></li>
+                <li th:text="'Gender : ' + ${showPatientDto.gender}" class="list-group-item"></li>
+                <li th:text="'Address : ' + ${showPatientDto.address}" class="list-group-item"></li>
+                <li th:text="'Phone : ' + ${showPatientDto.phone}" class="list-group-item"></li>
             </ul>
             <div class="card-footer text-center">
-                Patient I D: #<span th:text="${patient.id}"></span>
+                    Patient Risk
+                <h6 class="text-danger">
+                    <b th:text="${showPatientDto.risk}"></b>
+                </h6>
             </div>
         </div>
     </section>
 
-    <div class="text-center mt-3">
-        <a th:href="@{ /client-service/patients }" class="btn btn-secondary my-4 mx-3">Return patients list</a>
-        <a th:href="@{ ${patient.id} + '/note'}" class="btn btn-success my-4 mx-3">Add New Note</a>
+
+
+        <div class="text-center mt-3">
+            <a th:href="@{ /client-service/patients }" class="btn btn-secondary my-4 mx-3">Return patients list</a>
+            <a th:href="@{ ${showPatientDto.id} + '/note'}" class="btn btn-success my-4 mx-3">Add New Note</a>
 
         <!--success message-->
 
-        <div class="container" th:if="${param.success}">
-            <div class="alert alert-info mx-auto d-block">
-                New note have been successfully registered!
-            </div>
-        </div>
-
-        <section class="container d-flex justify-content-center">
-
-            <div class="card" style="width: 100rem;">
-                <div class="card-body">
-
-
-                    <div th:each="note, iStat : ${noteList}" class="mb-3">
-                        <h6 class="card-title" th:text=" 'Note n° ' + ${noteList.size()-iStat.index}"></h6>
-                        <pre class="card-text" th:text="${note.note}"></pre>
-                        <hr>
-                    </div>
-
+            <div class="container" th:if="${param.success}">
+                <div class="alert alert-info mx-auto d-block">
+                    New note have been successfully registered!
                 </div>
             </div>
-        </section>
-    </div>
+
+            <section class="container d-flex justify-content-center">
+
+                <div class="card" style="width: 100rem;">
+                    <div class="card-body">
+
+
+                        <div th:each="note, iStat : ${showPatientDto.noteList}" class="mb-3">
+                            <h6 class="card-title" th:text=" 'Note n° ' + ${showPatientDto.noteList.size()-iStat.index}"></h6>
+                            <pre class="card-text" th:text="${note.note}"></pre>
+                            <hr>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
 </div>
 </body>
 </html>

@@ -1,6 +1,6 @@
 package com.ocr.client_service.constants;
 
-public enum Gender {
+public enum GenderEnum {
     M,
     F
 }

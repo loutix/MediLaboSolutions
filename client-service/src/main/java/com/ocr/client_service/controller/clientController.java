@@ -1,10 +1,13 @@
 package com.ocr.client_service.controller;
 
 import com.ocr.client_service.bean.Note;
-import com.ocr.client_service.dto.NoteRequestDto;
 import com.ocr.client_service.bean.Patient;
+import com.ocr.client_service.bean.Risk;
+import com.ocr.client_service.dto.NoteRequestDto;
+import com.ocr.client_service.dto.ShowPatientDto;
 import com.ocr.client_service.proxies.NoteProxy;
 import com.ocr.client_service.proxies.PatientProxy;
+import com.ocr.client_service.proxies.RiskProxy;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,9 +26,12 @@ public class clientController {
 
     private final NoteProxy noteProxy;
 
-    public clientController(PatientProxy patientProxy, NoteProxy noteProxy) {
+    private final RiskProxy riskProxy;
+
+    public clientController(PatientProxy patientProxy, NoteProxy noteProxy, RiskProxy riskProxy) {
         this.patientProxy = patientProxy;
         this.noteProxy = noteProxy;
+        this.riskProxy = riskProxy;
     }
 
     @GetMapping("/home")
@@ -44,10 +50,12 @@ public class clientController {
     public String showPatient(@PathVariable(value = "id") Integer id, Model model) {
 
         Patient patient = patientProxy.getPatient(id);
-        model.addAttribute("patient", patient);
-
         List<Note> noteList = noteProxy.getNoteByPatientId(id);
-        model.addAttribute("noteList", noteList);
+        Risk patientRisk = riskProxy.getPatientRisk(id);
+
+        ShowPatientDto showPatientDto = new ShowPatientDto(patient, noteList, patientRisk);
+
+        model.addAttribute("showPatientDto", showPatientDto);
 
         return "ShowPatient";
     }
@@ -61,7 +69,6 @@ public class clientController {
         noteRequestDto.setPatId(patient.getId());
         noteRequestDto.setFirst_name(patient.getFirst_name());
         noteRequestDto.setLast_name(patient.getLast_name());
-
 
         model.addAttribute("noteRequestDto", noteRequestDto);
 
@@ -80,9 +87,9 @@ public class clientController {
 
         Integer id = noteAdded.getPatId();
 
-        noteProxy.addNewNote(id,noteAdded);
+        noteProxy.addNewNote(id, noteAdded);
 
-        return "redirect:/client-service/patient/"+ id +"?success";
+        return "redirect:/client-service/patient/" + id + "?success";
 
     }
 
