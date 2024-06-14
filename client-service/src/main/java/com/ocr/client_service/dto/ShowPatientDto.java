@@ -19,7 +19,8 @@ public class ShowPatientDto {
     public String address;
     public String phone;
     public List<Note> noteList;
-    public RiskEnum risk;
+    public RiskEnum riskEnum;
+
 
     public ShowPatientDto(Patient patient, List<Note> noteList, Risk risk) {
         this.id = patient.getId();
@@ -30,6 +31,6 @@ public class ShowPatientDto {
         this.address = patient.getAddress();
         this.phone = patient.getPhone();
         this.noteList = noteList;
-        this.risk = risk.risk();
+        this.riskEnum = risk.riskEnum();
     }
 }
