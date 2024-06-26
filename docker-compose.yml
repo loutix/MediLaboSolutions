@@ -1,0 +1,181 @@
+version: '3.9'
+services:
+
+
+  #*********** PHP MY ADMIN ***********
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    environment:
+      PMA_HOST: database_mariadb
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    depends_on:
+      - database_mariadb
+    networks:
+      - medilab-network
+
+      #*********** MARIA DB ***********
+  database_mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: p9_patient-service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - medilab-network
+
+  #*********** DISCOVERY SERVICE ***********
+  discovery-service:
+    build: ./discovery-service
+    image: loutix/discovery-service
+    container_name: discovery_service_container
+    restart: unless-stopped
+    ports:
+      - 8761:8761
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    networks:
+      - medilab-network
+
+  #*********** GATEWAY SERVICE ***********
+  gateway-service:
+    build: ./gateway-service
+    image: loutix/gateway-service
+    container_name: gateway_service_container
+    restart: unless-stopped
+    ports:
+      - 8090:8090
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+    depends_on:
+      - discovery-service
+    networks:
+      - medilab-network
+
+  #*********** MS PATIENT ***********
+  patient-service:
+    build: ./patient-service
+    image: loutix/patient-service
+    container_name: patient_service_container
+    restart: unless-stopped
+    ports:
+      - 8082:8082
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mariadb://database_mariadb:3306/p9_patient-service
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+    depends_on:
+      - database_mariadb
+      - discovery-service
+    networks:
+      - medilab-network
+
+
+  #*********** MONGO DB ***********
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb_container
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: noteDatabase
+    networks:
+      - medilab-network
+
+  #*********** MS NOTE ***********
+  note-service:
+    build: ./note-service
+    image: loutix/note-service
+    container_name: note_service_container
+    restart: unless-stopped
+    ports:
+      - 8083:8083
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/noteDatabase
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+    depends_on:
+      - discovery-service
+      - mongodb
+    networks:
+      - medilab-network
+
+
+  #*********** MS ASSESSMENT ***********
+  assessment-service:
+    build: ./assessment-service
+    image: loutix/assessment-service
+    container_name: assessment_service_container
+    restart: on-failure
+    ports:
+      - 8084:8084
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+    depends_on:
+      - discovery-service
+      - patient-service
+      - note-service
+    networks:
+      - medilab-network
+
+  #*********** MS CLIENT ***********
+  client-service:
+    build: ./client-service
+    image: loutix/client-service
+    container_name: client_service_container
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+    depends_on:
+      - discovery-service
+      - patient-service
+      - note-service
+      - assessment-service
+      - gateway-service
+    networks:
+      - medilab-network
+
+  #*********** VOLUME ***********
+volumes:
+  db-data:
+  mongodb-data:
+
+  #*********** NETWORK ***********
+networks:
+  medilab-network:
+    driver: bridge
