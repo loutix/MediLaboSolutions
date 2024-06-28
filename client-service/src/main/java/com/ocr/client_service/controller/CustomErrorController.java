@@ -24,7 +24,7 @@ public class CustomErrorController implements ErrorController {
         model.addAttribute("error", errorAttributes.get("error"));
         model.addAttribute("status", errorAttributes.get("status"));
         model.addAttribute("path", errorAttributes.get("path"));
-        return "error404"; // Nom du template Thymeleaf pour afficher l'erreur
+        return "error404";
     }
 
 

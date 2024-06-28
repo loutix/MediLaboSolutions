@@ -17,6 +17,12 @@ import java.util.List;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
+    /**
+     * Methode return Custom exceptions
+     *
+     * @param e PatientNotFoundException or IdDifferentException
+     * @return ResponseEntity
+     */
     @ExceptionHandler({PatientNotFoundException.class, IdDifferentException.class})
     public ResponseEntity<Object> handleApiRequestException(RuntimeException e) {
         HttpStatus NotFound = HttpStatus.NOT_FOUND;
@@ -30,6 +36,12 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(apiException, NotFound);
     }
 
+    /**
+     * Methode return validations exceptions from DTO
+     *
+     * @param e MethodArgumentNotValidException
+     * @return ResponseEntity
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleApiValidation(MethodArgumentNotValidException e) {
         HttpStatus BadRequest = HttpStatus.BAD_REQUEST;
@@ -44,7 +56,6 @@ public class ApiExceptionHandler {
 
         return new ResponseEntity<>(apiException, BadRequest);
     }
-
 
 
 }

@@ -25,7 +25,7 @@ public class PatientController {
 
     @GetMapping(path = "/patients")
     public ResponseEntity<List<Patient>> index() {
-        log.info("GET: /");
+        log.info("GET: /patients");
         return ResponseEntity.ok(patientService.index());
     }
 

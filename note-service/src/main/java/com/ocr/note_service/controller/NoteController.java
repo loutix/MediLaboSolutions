@@ -30,13 +30,13 @@ public class NoteController {
 
     @GetMapping("/patient/{id}")
     public ResponseEntity<List<Note>> showPatientNote(@PathVariable("id") Integer id) {
-        log.info("GET: /patient/{}", id);
+        log.info("GET: /note-service/patient/{}", id);
         return ResponseEntity.ok(noteServiceImpl.getNotesByPatientId(id));
     }
 
     @PostMapping("/patient/{id}")
     public ResponseEntity<Note> createNote(@PathVariable("id") Integer id, @Valid @RequestBody NoteDto noteDto) {
-        log.info("POST:  /patient/{}", id);
+        log.info("POST:  /note-service/patient/{}", id);
         return ResponseEntity.ok(noteServiceImpl.createNote(id, noteDto));
     }
 

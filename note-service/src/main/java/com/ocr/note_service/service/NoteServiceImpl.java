@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class NoteServiceImpl {
+public class NoteServiceImpl implements NoteService {
 
     private final NoteRepository noteRepository;
 
@@ -18,10 +18,25 @@ public class NoteServiceImpl {
         this.noteRepository = noteRepository;
     }
 
+
+    /**
+     * Return the complete list of notes from DB
+     *
+     * @return a list of all notes
+     */
+    @Override
     public List<Note> index() {
         return noteRepository.findAll();
     }
 
+    /**
+     * Find all notes with the patient ID
+     *
+     * @param id patient ID
+     * @return a list of Note
+     * @throws PatientNotFoundException if the patient ID does not exist.
+     */
+    @Override
     public List<Note> getNotesByPatientId(Integer id) {
         if (!noteRepository.existsByPatId(id)) {
             throw new PatientNotFoundException(id);
@@ -30,6 +45,17 @@ public class NoteServiceImpl {
         }
     }
 
+
+    /**
+     * Save a new note for the patient with the param ID
+     *
+     * @param id      patient ID
+     * @param noteDto DTO to create a new Note
+     * @return the note created
+     * @throws IdDifferentException if the ID in the DTO does not match the patient ID.
+     * @throws PatientNotFoundException if the patient ID does not exist.
+     */
+    @Override
     public Note createNote(Integer id, NoteDto noteDto) {
 
         if (!noteDto.getPatId().equals(id)) {
@@ -49,8 +75,6 @@ public class NoteServiceImpl {
 
             return noteCreated;
         }
-
-
     }
 }
 

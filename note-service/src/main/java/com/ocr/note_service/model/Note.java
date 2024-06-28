@@ -23,5 +23,4 @@ public class Note {
     @NotBlank
     private String note;
 
-    //todo rajouter un champ date
 }

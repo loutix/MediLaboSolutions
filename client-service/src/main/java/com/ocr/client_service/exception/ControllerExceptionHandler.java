@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class ControllerExceptionHandler {
     @ExceptionHandler(Exception.class)
     public String handleException(Model model, Exception exception){
-        model.addAttribute("errorMsg", exception.getMessage());
         log.info("*** ERROR  CACHED***");
         log.error(exception.getMessage(), exception);
         log.info("*** ERROR ***");

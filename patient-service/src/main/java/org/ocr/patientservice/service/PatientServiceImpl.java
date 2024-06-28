@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.ocr.patientservice.Exception.PatientNotFoundException;
 import org.ocr.patientservice.Repository.PatientRepository;
 import org.ocr.patientservice.dto.PatientDto;
-import org.ocr.patientservice.interfaces.PatientService;
 import org.ocr.patientservice.model.Patient;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +22,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     /**
-     * Return all patients
+     * Retrieves a list sorted by ID of all patients from DB
      *
-     * @return Set<Patient>
+     * @return a sorted list of patients
      */
     @Override
     public List<Patient> index() {
@@ -50,9 +49,9 @@ public class PatientServiceImpl implements PatientService {
 
 
     /**
-     * @param id         Integer
+     * @param id         the id From patient to updated
      * @param patientDto PatientDto
-     * @return the method return the patient updated
+     * @return method return the patient updated
      */
     @Override
     public Patient update(Integer id, PatientDto patientDto) {

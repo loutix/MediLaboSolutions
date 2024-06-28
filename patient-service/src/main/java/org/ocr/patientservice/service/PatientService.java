@@ -1,4 +1,4 @@
-package org.ocr.patientservice.interfaces;
+package org.ocr.patientservice.service;
 
 import org.ocr.patientservice.dto.PatientDto;
 import org.ocr.patientservice.model.Patient;

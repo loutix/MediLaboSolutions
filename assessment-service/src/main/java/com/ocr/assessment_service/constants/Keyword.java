@@ -24,11 +24,9 @@ public enum Keyword {
         this.keyword = keyword;
     }
 
-    public String getKeyword(){
+    public String getKeyword() {
         return this.keyword;
     }
-
-
 
     public static List<String> getAllKeywords() {
         return Arrays.stream(Keyword.values())

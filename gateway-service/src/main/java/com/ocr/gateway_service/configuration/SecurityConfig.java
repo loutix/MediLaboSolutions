@@ -41,17 +41,18 @@ public class SecurityConfig {
         return serverHttpSecurity.build();
     }
 
+
+    /**
+     * Implement a new user by default
+     * @return create a default user in-memory user.
+     */
     @Bean
     public MapReactiveUserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("user")
                 .password(passwordEncoder().encode("user"))
                 .roles("USER")
                 .build();
-        UserDetails adminUser = User.withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build();
-        return new MapReactiveUserDetailsService(user, adminUser);
+        return new MapReactiveUserDetailsService(user);
     }
 
     @Bean
