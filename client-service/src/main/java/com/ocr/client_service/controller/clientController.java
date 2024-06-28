@@ -10,6 +10,7 @@ import com.ocr.client_service.proxies.PatientProxy;
 import com.ocr.client_service.proxies.RiskProxy;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,9 @@ import java.util.List;
 @RequestMapping("/client-service")
 public class clientController {
 
+    @Value("${gateway-service.url}")
+    private String gatewayServiceUrl;
+
     private final PatientProxy patientProxy;
 
     private final NoteProxy noteProxy;
@@ -33,6 +37,7 @@ public class clientController {
         this.noteProxy = noteProxy;
         this.riskProxy = riskProxy;
     }
+
 
     @GetMapping("/home")
     public String index() {
@@ -89,7 +94,7 @@ public class clientController {
 
         noteProxy.addNewNote(id, noteAdded);
 
-        return "redirect:/client-service/patient/" + id + "?success";
+        return "redirect:" + gatewayServiceUrl + "/client-service/patient/" + id + "?success";
 
     }
 

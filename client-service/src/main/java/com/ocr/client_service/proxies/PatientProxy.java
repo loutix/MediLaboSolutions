@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@FeignClient(name = "patient-service", /*url = "localhost:8090",*/  path = "patient-service")
+@FeignClient(name = "patient-service", url = "${gateway-service.url}", path = "patient-service")
 public interface PatientProxy {
     @GetMapping("/patients")
     List<Patient> getAllPatients();

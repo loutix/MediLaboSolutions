@@ -145,6 +145,7 @@ services:
       - discovery-service
       - patient-service
       - note-service
+      - gateway-service
     networks:
       - medilab-network
 
