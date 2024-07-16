@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -81,7 +83,7 @@ public class clientController {
     }
 
     @PostMapping("patient/note")
-    public String formNote(@Valid @ModelAttribute("noteRequestDto") NoteRequestDto noteRequestDto, BindingResult result) {
+    public String formNote(@Valid @ModelAttribute("noteRequestDto") NoteRequestDto noteRequestDto, BindingResult result, RedirectAttributes attributes) {
         if (result.hasErrors()) {
             return "AddNote";
         }
@@ -94,7 +96,7 @@ public class clientController {
 
         noteProxy.addNewNote(id, noteAdded);
 
-        return "redirect:" + gatewayServiceUrl + "/client-service/patient/" + id + "?success";
+        return "redirect:/client-service/patient/" + id + "?success";
 
     }
 
