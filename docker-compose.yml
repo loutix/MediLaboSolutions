@@ -11,9 +11,9 @@ services:
       - 8080:8080
     environment:
       PMA_HOST: database_mariadb
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${MYSQL}
+      MYSQL_USER: ${MYSQL}
+      MYSQL_PASSWORD: ${MYSQL}
     depends_on:
       - database_mariadb
     networks:
@@ -26,10 +26,10 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: p9_patient-service
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ${DB_USER}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db-data:/var/lib/mysql
     networks:
@@ -80,8 +80,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: docker
       SPRING_DATASOURCE_URL: jdbc:mariadb://database_mariadb:3306/p9_patient-service
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
       EUREKA_CLIENT_FETCH_REGISTRY: "true"
@@ -103,7 +103,7 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/init.js:ro
     restart: always
     environment:
-      MONGO_INITDB_DATABASE: noteDatabase
+      MONGO_INITDB_DATABASE: ${DB_NAME_MONGO}
     networks:
       - medilab-network
 

@@ -70,7 +70,7 @@ Use Postman or any other HTTP client to interact with the RESTFUL APIs.
 
 Sure, here's the section on Green Code added to the README:
 
-## Green Code
+# Green Code
 Understanding Green Code
 
 Green Code refers to the practice of writing software that is energy-efficient and has a minimal impact on the environment.
@@ -86,7 +86,7 @@ To identify parts of the code that consume memory or other resources inefficient
 - **Logging and Monitoring**: Implement logging and monitoring to track resource usage over time and identify anomalies.
 - **Automated Tests**: Write automated tests to benchmark and measure the performance impact of code changes.
 
-## Recommendations for “Green” improvement of the project
+## Recommendations for the project
 - Filter as much information as possible at the database level. In mongoDB, use of aggregation.
 - Reduce the size of docker images using the ".dockerignore" file.
 - Reduce the size of the repository using the ".gitignore" file.
