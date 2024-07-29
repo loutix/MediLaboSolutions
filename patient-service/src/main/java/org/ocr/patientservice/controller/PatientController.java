@@ -37,12 +37,11 @@ public class PatientController {
         return ResponseEntity.of(patient);
     }
 
-    @PutMapping("/patient/update/{id}")
+    @PutMapping("/patient/{id}/update")
     public ResponseEntity<Patient> update(@PathVariable("id") Integer id, @Valid @RequestBody PatientDto patientDto) {
         log.info("PUT:  /update/{}", id);
         Patient patient = patientService.update(id, patientDto);
         return ResponseEntity.ok(patient);
     }
-
 
 }

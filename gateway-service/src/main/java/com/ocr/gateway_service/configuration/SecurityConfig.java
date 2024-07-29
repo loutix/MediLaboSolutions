@@ -31,9 +31,8 @@ public class SecurityConfig {
                         .anyExchange()
                         .authenticated()
                 ).formLogin(form -> form
-                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler("client-service/home"))
+                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler("http://localhost:8081/client-service/home"))
                 )
-                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")

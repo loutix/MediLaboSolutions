@@ -7,8 +7,8 @@ CREATE TABLE patients
     first_name  VARCHAR(250) NOT NULL,
     birth_date  DATE NOT NULL,
     gender      CHAR(1) NOT NULL CHECK (gender IN ('F', 'M')),
-    address     VARCHAR(250) ,
-    phone       VARCHAR(250)
+    address     VARCHAR(50) ,
+    phone       VARCHAR(12)
 );
 
 

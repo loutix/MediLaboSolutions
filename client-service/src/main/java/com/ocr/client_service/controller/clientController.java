@@ -4,6 +4,8 @@ import com.ocr.client_service.bean.Note;
 import com.ocr.client_service.bean.Patient;
 import com.ocr.client_service.bean.Risk;
 import com.ocr.client_service.dto.NoteRequestDto;
+import com.ocr.client_service.dto.EditPatientDto;
+import com.ocr.client_service.dto.PatientDto;
 import com.ocr.client_service.dto.ShowPatientDto;
 import com.ocr.client_service.proxies.NoteProxy;
 import com.ocr.client_service.proxies.PatientProxy;
@@ -16,8 +18,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -97,7 +100,50 @@ public class clientController {
         noteProxy.addNewNote(id, noteAdded);
 
         return "redirect:/client-service/patient/" + id + "?success";
+    }
 
+    @GetMapping("/patient/{id}/edit")
+    public String editPatient(@PathVariable(value = "id") Integer id, Model model) {
+
+        Patient patient = patientProxy.getPatient(id);
+
+        EditPatientDto editPatientDto = new EditPatientDto(
+                patient.getId(),
+                patient.getFirst_name(),
+                patient.getLast_name(),
+                patient.getBirth_date().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                patient.getGender(),
+                patient.getAddress(),
+                patient.getPhone()
+        );
+
+        model.addAttribute("editPatientDto", editPatientDto);
+
+        return "EditPatient";
+    }
+
+    @PostMapping("/patient/update")
+    public String updatePatient(@Valid @ModelAttribute("editPatientDto") EditPatientDto editPatientDto, BindingResult result, RedirectAttributes attributes) {
+
+        if (result.hasErrors()) {
+            return "EditPatient";
+        }
+
+        Integer id = editPatientDto.getId();
+
+        PatientDto patientDto = new PatientDto(
+                editPatientDto.getFirst_name(),
+                editPatientDto.getLast_name(),
+                LocalDate.parse(editPatientDto.getBirth_date()),
+                editPatientDto.getGender(),
+                editPatientDto.getAddress(),
+                editPatientDto.getPhone()
+        );
+
+
+        patientProxy.updatePatient(id , patientDto);
+
+        return "redirect:/client-service/patient/" + id + "?success_edit";
     }
 
 

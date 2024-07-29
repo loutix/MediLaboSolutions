@@ -24,7 +24,7 @@
                 <li th:text="'Phone : ' + ${showPatientDto.phone}" class="list-group-item"></li>
             </ul>
             <div class="card-footer text-center">
-                    Patient Risk
+                Patient Risk
                 <h6 class="text-danger">
                     <b th:text="${showPatientDto.riskEnum}"></b>
                 </h6>
@@ -33,35 +33,42 @@
     </section>
 
 
-
+    <div>
         <div class="text-center mt-3">
             <a th:href="@{ /client-service/patients }" class="btn btn-secondary my-4 mx-3">Return patients list</a>
             <a th:href="@{ ${showPatientDto.id} + '/note'}" class="btn btn-success my-4 mx-3">Add New Note</a>
-
+            <a th:href="@{ ${showPatientDto.id} + '/edit'}" class="btn btn-warning my-4 mx-3">Edit Patient</a>
+        </div>
         <!--success message-->
 
-            <div class="container" th:if="${param.success}">
-                <div class="alert alert-info mx-auto d-block">
-                    New note have been successfully registered!
+        <div class="container" th:if="${param.success}">
+            <div class="alert alert-info mx-auto d-block text-center" style="width: 50rem;">
+                New note have been successfully registered!
+            </div>
+        </div>
+
+        <div class="container" th:if="${param.success_edit}">
+            <div class="alert alert-info mx-auto d-block text-center" style="width: 50rem;">
+                Patient has been successfully updated!
+            </div>
+        </div>
+
+        <section class="container d-flex justify-content-center">
+
+            <div class="card" style="width: 50rem;">
+                <div class="card-body">
+
+                    <div th:each="note, iStat : ${showPatientDto.noteList}" class="mb-3">
+                        <h6 class="card-title text-center "
+                            th:text=" 'Note n° ' + ${showPatientDto.noteList.size()-iStat.index}"></h6>
+                        <pre class="card-text" th:text="${note.note}"></pre>
+                        <hr>
+                    </div>
+
                 </div>
             </div>
-
-            <section class="container d-flex justify-content-center">
-
-                <div class="card" style="width: 100rem;">
-                    <div class="card-body">
-
-
-                        <div th:each="note, iStat : ${showPatientDto.noteList}" class="mb-3">
-                            <h6 class="card-title" th:text=" 'Note n° ' + ${showPatientDto.noteList.size()-iStat.index}"></h6>
-                            <pre class="card-text" th:text="${note.note}"></pre>
-                            <hr>
-                        </div>
-
-                    </div>
-                </div>
-            </section>
-        </div>
+        </section>
+    </div>
 </div>
 </body>
 </html>

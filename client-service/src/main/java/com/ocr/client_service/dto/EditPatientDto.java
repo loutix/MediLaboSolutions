@@ -1,7 +1,8 @@
-package org.ocr.patientservice.dto;
+package com.ocr.client_service.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ocr.client_service.constants.GenderEnum;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -9,15 +10,15 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.ocr.patientservice.constants.Gender;
-
-import java.time.LocalDate;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PatientDto {
+public class EditPatientDto {
+
+
+    private Integer id;
 
     @NotBlank(message = "First name is mandatory")
     private String first_name;
@@ -27,10 +28,10 @@ public class PatientDto {
 
     @NotNull(message = "Birth date is mandatory")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDate birth_date;
+    private String birth_date;
 
     @NotNull(message = "Gender is mandatory")
-    private Gender gender;
+    private GenderEnum gender;
 
     @Size(max = 50, message = "Address length must be less than or equal to 50 characters")
     private String address;
