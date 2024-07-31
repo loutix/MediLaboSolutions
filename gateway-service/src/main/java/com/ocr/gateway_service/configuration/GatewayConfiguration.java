@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GatewayConfiguration {
 
+
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
@@ -24,5 +25,6 @@ public class GatewayConfiguration {
                         .uri("lb://assessment-service"))
                 .build();
     }
-
 }
+
+

@@ -26,6 +26,7 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "client-service/home",
+                                "note-service/**",
                                 "/logout")
                         .permitAll()
                         .anyExchange()

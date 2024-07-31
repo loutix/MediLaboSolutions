@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.6</version>
+        <version>3.3.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ocr</groupId>
@@ -16,8 +16,8 @@
     <properties>
         <java.version>21</java.version>
         <spring-cloud.version>2023.0.2</spring-cloud.version>
-        <feign>4.1.1</feign>
-        <eureka.version>4.1.0</eureka.version>
+        <feign.version>4.1.1</feign.version>
+        <eureka.version>4.1.1</eureka.version>
         <openapi.version>2.2.0</openapi.version>
     </properties>
     <dependencies>
@@ -25,8 +25,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!--EUREKA CLIENT-->
+        <!--EUREKA-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -47,9 +46,8 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
-            <version>${feign}</version>
+            <version>${feign.version}</version>
         </dependency>
-
         <!--VALIDATION-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -59,7 +57,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
         </dependency>
-
         <!--SWAGGER-->
         <dependency>
             <groupId>org.springdoc</groupId>

@@ -3,8 +3,8 @@ package com.ocr.client_service.controller;
 import com.ocr.client_service.bean.Note;
 import com.ocr.client_service.bean.Patient;
 import com.ocr.client_service.bean.Risk;
-import com.ocr.client_service.dto.NoteRequestDto;
 import com.ocr.client_service.dto.EditPatientDto;
+import com.ocr.client_service.dto.NoteRequestDto;
 import com.ocr.client_service.dto.PatientDto;
 import com.ocr.client_service.dto.ShowPatientDto;
 import com.ocr.client_service.proxies.NoteProxy;
@@ -26,7 +26,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequestMapping("/client-service")
-public class clientController {
+public class ClientController {
 
     @Value("${gateway-service.url}")
     private String gatewayServiceUrl;
@@ -37,7 +37,7 @@ public class clientController {
 
     private final RiskProxy riskProxy;
 
-    public clientController(PatientProxy patientProxy, NoteProxy noteProxy, RiskProxy riskProxy) {
+    public ClientController(PatientProxy patientProxy, NoteProxy noteProxy, RiskProxy riskProxy) {
         this.patientProxy = patientProxy;
         this.noteProxy = noteProxy;
         this.riskProxy = riskProxy;
@@ -141,7 +141,7 @@ public class clientController {
         );
 
 
-        patientProxy.updatePatient(id , patientDto);
+        patientProxy.updatePatient(id, patientDto);
 
         return "redirect:/client-service/patient/" + id + "?success_edit";
     }
