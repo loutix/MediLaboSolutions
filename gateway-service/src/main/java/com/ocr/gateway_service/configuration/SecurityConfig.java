@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
+import org.springframework.security.web.server.authentication.logout.RedirectServerLogoutSuccessHandler;
+
+import java.net.URI;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -19,6 +22,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity serverHttpSecurity) {
+
+        RedirectServerLogoutSuccessHandler logoutSuccessHandler = new RedirectServerLogoutSuccessHandler();
+        logoutSuccessHandler.setLogoutSuccessUrl(URI.create("/client-service/home"));
+
         serverHttpSecurity
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
@@ -26,17 +33,17 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/js/**",
                                 "client-service/home",
-                                "note-service/**",
                                 "/logout")
                         .permitAll()
                         .anyExchange()
                         .authenticated()
                 ).formLogin(form -> form
-                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler("http://localhost:8081/client-service/home"))
+                        .authenticationSuccessHandler(new RedirectServerAuthenticationSuccessHandler("/client-service/home"))
                 )
                 .httpBasic(Customizer.withDefaults())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
+                        .logoutSuccessHandler(logoutSuccessHandler)
                 );
         return serverHttpSecurity.build();
     }

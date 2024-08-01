@@ -28,8 +28,8 @@ import java.util.List;
 @RequestMapping("/client-service")
 public class ClientController {
 
-    @Value("${gateway-service.url}")
-    private String gatewayServiceUrl;
+    @Value("${medilabo.front.redirect.url}")
+    private String gatewayUrl;
 
     private final PatientProxy patientProxy;
 
@@ -99,7 +99,8 @@ public class ClientController {
 
         noteProxy.addNewNote(id, noteAdded);
 
-        return "redirect:/client-service/patient/" + id + "?success";
+        return "redirect:" + gatewayUrl + "/client-service/patient/" + id + "?success";
+
     }
 
     @GetMapping("/patient/{id}/edit")
@@ -143,7 +144,7 @@ public class ClientController {
 
         patientProxy.updatePatient(id, patientDto);
 
-        return "redirect:/client-service/patient/" + id + "?success_edit";
+        return "redirect:" + gatewayUrl + "/client-service/patient/" + id + "?success_edit";
     }
 
 
