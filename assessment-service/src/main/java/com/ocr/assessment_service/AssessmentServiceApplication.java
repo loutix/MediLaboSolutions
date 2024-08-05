@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients("com.ocr.assessment_service")
+@EnableFeignClients
 public class AssessmentServiceApplication {
 
 	public static void main(String[] args) {

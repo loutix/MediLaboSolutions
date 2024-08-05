@@ -10,7 +10,9 @@ import com.ocr.assessment_service.proxies.NoteProxy;
 import com.ocr.assessment_service.proxies.PatientProxy;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AssessmentServiceImpl implements AssessmentService {
@@ -56,17 +58,38 @@ public class AssessmentServiceImpl implements AssessmentService {
     @Override
     public int countKeyword(List<Note> noteList) {
 
-        int count = 0;
+        /* IMPORTANT count key word only one in each note */
+  /*      int count = 0;
 
         for (Note note : noteList) {
+
+            Set<String> foundKeywords = new HashSet<>();
+
             for (String word : Keyword.getAllKeywords()) {
                 if (note.getNote().toLowerCase().contains(word.toLowerCase())) {
-                    count++;
+                    foundKeywords.add(word.toLowerCase());
                 }
             }
+
+            count += foundKeywords.size();
         }
 
-        return count;
+        return count;*/
+
+        /* IMPORTANT count key word only one in all notes */
+        Set<String> foundKeywords = new HashSet<>();
+
+        for (Note note : noteList) {
+
+            for (String word : Keyword.getAllKeywords()) {
+                if (note.getNote().toLowerCase().contains(word.toLowerCase())) {
+                    foundKeywords.add(word.toLowerCase());
+                }
+            }
+
+        }
+
+        return foundKeywords.size();
     }
 
     /**
